@@ -8,6 +8,7 @@ var fs = require('fs');
 var path = require('path');
 var afterAll = require('after-all');
 var extend = require('xtend');
+var rjson = require('relaxed-json');
 
 var HOME = process.env.HOME || process.env.USERPROFILE;
 
@@ -79,7 +80,8 @@ var update = function(organization) {
 
 				var json;
 				try {
-					json = JSON.parse(new Buffer(res.content, 'base64'));
+					json = rjson.transform(new Buffer(res.content, 'base64').toString());
+					json = JSON.parse(json);
 				}
 				catch(e) {
 					// File is not proper json
