@@ -100,10 +100,12 @@ var update = function(organization) {
 				loadJson('/bower.json', repository, function(err, bowerModules) {
 					if (err) console.error(err);
 
-					result[repository.name] = {
-						dependencies: extend(npmModules.dependencies, bowerModules.dependencies),
-						devDependencies: extend(npmModules.devDependencies, bowerModules.devDependencies)
-					};
+					if (npmModules) {
+						result[repository.name] = {
+							dependencies: extend(npmModules.dependencies, bowerModules.dependencies),
+							devDependencies: extend(npmModules.devDependencies, bowerModules.devDependencies)
+						};
+					}
 
 					onend();
 				});
